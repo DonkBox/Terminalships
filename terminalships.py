@@ -32,23 +32,78 @@ print("""\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 #### Start of prep game prep code.
 
-playergrid = {0: {0: {1: """	|""", 2: """	|""", 3: """	|"""}, 1: {1: """	|""", 2: """   A	|""", 3: """	|"""}}}
+#### Defines function, that converts playergrid string to playergrid dict
+
+playergridstr = """	|	|	|	|	|	|	|	|	|	|
+	|   A	|   B	|   C	|   D	|   E	|   F	|   G	|   H	|   I	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|
+   1	|	|	|	|	|	|	|	|	|	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|
+   2	|	|	|	|	|	|	|	|	|	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|
+   3	|	|	|	|	|	|	|	|	|	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|
+   4	|	|	|	|	|	|	|	|	|	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|
+   5	|	|	|	|	|	|	|	|	|	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|
+   6	|	|	|	|	|	|	|	|	|	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|
+   7	|	|	|	|	|	|	|	|	|	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|
+   8	|	|	|	|	|	|	|	|	|	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------
+	|	|	|	|	|	|	|	|	|	|
+   9	|	|	|	|	|	|	|	|	|	|
+	|	|	|	|	|	|	|	|	|	|
+--------------------------------------------------------------------------------"""
+
+newplayergrid2 = []
+
+def convertplayergrid():
+    newplayergrid2 = playergridstr.split("""--------------------------------------------------------------------------------""")
+
+    for a in range(len(newplayergrid2)):
+        newplayergrid2[a] = newplayergrid2[a].split('\n')
+        newplayergrid2[a].pop()
+    newplayergrid2.pop()
+    for a in range(len(newplayergrid2) - 1):
+        newplayergrid2[a + 1].pop(0)
+    for a in range(len(newplayergrid2)):
+        for b in range(len(newplayergrid2[a])):
+            newplayergrid2[a][b] = newplayergrid2[a][b].split('|')
+            newplayergrid2[a][b].pop()
+
+    return newplayergrid2
+
+newplayergrid = convertplayergrid()
 
 #### Defines function, that prints playergrid correctly
 
 def printplayergrid():
-    for key1 in range(10):
-        for key3 in range(1, 4):
-            key2string = ""
-            for key2 in range(10):
-                try:
-                    key2string += playergrid[key1][key2][key3]
-                except KeyError:
-                    pass
-            try:
-                print(key2string)
-            except KeyError:
-                pass
+    for a in range(len(newplayergrid)):
+        for b in range(len(newplayergrid[a])):
+            tempstr = ""
+            for c in range(len(newplayergrid[a][b])):
+                tempstr += newplayergrid[a][b][c] + "|"
+            print(tempstr)
 
         print("--------------------------------------------------------------------------------")
 
