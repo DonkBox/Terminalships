@@ -28,7 +28,7 @@ Here's how the game works! \n
 input("PRESS ENTER TO CONTINUE.")
 
 print("""\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n""")
+\n\n\n\n\n\n\n\n\n""")
 
 #### Start of prep game prep code.
 
@@ -98,6 +98,7 @@ newplayergrid = convertplayergrid()
 #### Defines function, that prints playergrid correctly
 
 def printplayergrid():
+    print("--------------------------------------------------------------------------------")
     for a in range(len(newplayergrid)):
         for b in range(len(newplayergrid[a])):
             tempstr = ""
@@ -107,4 +108,75 @@ def printplayergrid():
 
         print("--------------------------------------------------------------------------------")
 
+# printplayergrid()
+
+#### Setup stage
+
+print("""It's time to set up your battleship grid! \n \n""")
+
+print("""Instructions
+
+To set up your battleship grid, you select which ship you want to place down, the area on which you want the
+tail of the ship be on and in which direction you want the ship to go. \nHere's an example:\n
+    Select ship: carrier
+    Select area: B3
+    Select direction: right
+    
+    Output: 
+    
+--------------------------------------------------------------------------------
+        |       |       |       |       |       |       |       |       |       |
+        |   A   |   B   |   C   |   D   |   E   |   F   |   G   |   H   |   I   |
+        |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------
+        |       |       |       |       |       |       |       |       |       |
+   1    |       |       |       |       |       |       |       |       |       |
+        |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------
+        |       |       |       |       |       |       |       |       |       |
+   2    |       |       |       |       |       |       |       |       |       |
+        |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------
+        |       |[#####]|[#####]|[#####]|[#####]|       |       |       |       |
+   3    |       |[#####]|[#####]|[#####]|[#####]|       |       |       |       |
+        |       |[#####]|[#####]|[#####]|[#####]|       |       |       |       |
+--------------------------------------------------------------------------------
+        |       |       |       |       |       |       |       |       |       |
+   4    |       |       |       |       |       |       |       |       |       |
+        |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------
+        |       |       |       |       |       |       |       |       |       |
+   5    |       |       |       |       |       |       |       |       |       |
+        |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------
+        |       |       |       |       |       |       |       |       |       |
+   6    |       |       |       |       |       |       |       |       |       |
+        |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------
+        |       |       |       |       |       |       |       |       |       |
+   7    |       |       |       |       |       |       |       |       |       |
+        |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------
+        |       |       |       |       |       |       |       |       |       |
+   8    |       |       |       |       |       |       |       |       |       |
+        |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------
+        |       |       |       |       |       |       |       |       |       |
+   9    |       |       |       |       |       |       |       |       |       |
+        |       |       |       |       |       |       |       |       |       |
+--------------------------------------------------------------------------------\n""")
+
+input("PRESS ENTER TO CONTINUE.")
+
+print("""\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+\n\n\n\n\n\n\n\n\n""")
+
+
+carriers = 1 #4 blocks
+battleships = 2 # 3 blocks
+submarines = 3 # 2 blocks
+patrols = 3 # 2 blocks
+
+print("You have: \n \t" + str(carriers) + " carrier left \n \t" + str(battleships) + " battleships left \n \t"
+ + str(submarines) + " submarines left \n \t" + str(patrols) + " patrol boats left \n \nHere is your grid: \n")
 printplayergrid()
