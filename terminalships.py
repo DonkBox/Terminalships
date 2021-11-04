@@ -538,7 +538,7 @@ def player_shot():
 
             for d in bot_ship_areas:
                 if d == [area1[0], area1[1] - 1]:
-                    sunk_check += 1
+                    sunk_check -= 1
                     continue
 
             if sunk_check == 4:
@@ -612,7 +612,7 @@ def bot_shot():
 
             for d in player_ship_areas:
                 if d == [var[0], var[1] - 1]:
-                    sunk_check += 1
+                    sunk_check -= 1
                     continue
 
             if sunk_check == 4:
@@ -699,7 +699,7 @@ def bot_shot():
 
             for d in player_ship_areas:
                 if d == [area[0], area[1] - 1]:
-                    sunk_check += 1
+                    sunk_check -= 1
                     continue
 
             if sunk_check == 4:
@@ -727,7 +727,7 @@ def bot_shot():
 
 
 rounds = 1
-while not player_ship_areas == [] or not bot_ship_areas == []:
+while not player_ship_areas == [] and not bot_ship_areas == []:
     print("Round " + str(rounds))
     print("Players turn!\n")
     print("Your ship grid:")
