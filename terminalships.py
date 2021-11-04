@@ -1,7 +1,5 @@
 import random
 
-#### Greeting and rules
-
 print("""
 Welcome, Player, to Terminalships! \n \n
 Here's how the game works! \n
@@ -30,11 +28,7 @@ input("PRESS ENTER TO CONTINUE.")
 print("""\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 \n\n\n\n\n\n\n\n\n""")
 
-#### Start of prep game prep code.
-
-#### Defines function, that converts playergrid string to playergrid dict
-
-playergridstr = """	|	|	|	|	|	|	|	|	|	|
+grid_str = """	|	|	|	|	|	|	|	|	|	|
 	|   A	|   B	|   C	|   D	|   E	|   F	|   G	|   H	|   I	|
 	|	|	|	|	|	|	|	|	|	|
 --------------------------------------------------------------------------------
@@ -75,49 +69,42 @@ playergridstr = """	|	|	|	|	|	|	|	|	|	|
 	|	|	|	|	|	|	|	|	|	|
 --------------------------------------------------------------------------------"""
 
-newplayergrid2 = []
 
-
-def convertplayergrid():
-    newplayergrid2 = playergridstr.split(
+def convert_grid():
+    grid = grid_str.split(
         """--------------------------------------------------------------------------------""")
 
-    for a in range(len(newplayergrid2)):
-        newplayergrid2[a] = newplayergrid2[a].split('\n')
-        newplayergrid2[a].pop()
-    newplayergrid2.pop()
-    for a in range(len(newplayergrid2) - 1):
-        newplayergrid2[a + 1].pop(0)
-    for a in range(len(newplayergrid2)):
-        for b in range(len(newplayergrid2[a])):
-            newplayergrid2[a][b] = newplayergrid2[a][b].split('|')
-            newplayergrid2[a][b].pop()
+    for a in range(len(grid)):
+        grid[a] = grid[a].split('\n')
+        grid[a].pop()
+    grid.pop()
+    for a in range(len(grid) - 1):
+        grid[a + 1].pop(0)
+    for a in range(len(grid)):
+        for b in range(len(grid[a])):
+            grid[a][b] = grid[a][b].split('|')
+            grid[a][b].pop()
 
-    return newplayergrid2
-
-
-newplayergrid = convertplayergrid()
+    return grid
 
 
-# print(newplayergrid)
+grid_list_player = convert_grid()
+grid_list_bot = convert_grid()
+grid_shot_player = convert_grid()
+grid_shot_bot = convert_grid()
 
-#### Defines function, that prints playergrid correctly
 
-def printplayergrid():
+def print_grid(grid):
     print("--------------------------------------------------------------------------------")
-    for a in range(len(newplayergrid)):
-        for b in range(len(newplayergrid[a])):
+    for a in range(len(grid)):
+        for b in range(len(grid[a])):
             tempstr = ""
-            for c in range(len(newplayergrid[a][b])):
-                tempstr += newplayergrid[a][b][c] + "|"
+            for c in range(len(grid[a][b])):
+                tempstr += grid[a][b][c] + "|"
             print(tempstr)
 
         print("--------------------------------------------------------------------------------")
 
-
-# printplayergrid()
-
-#### Setup stage
 
 print("""It's time to set up your battleship grid! \n \n""")
 
@@ -180,7 +167,7 @@ print("""\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 carrier = 1
 battleships = 2
-submarines = 3
+submarines = 2
 patrols = 3
 ships = ["carrier", "battleship", "submarine", "patrol"]
 areas = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2", "I2",
@@ -190,13 +177,6 @@ areas = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "A2", "B2", "C2",
          "A9", "B9", "C9", "D9", "E9", "F9", "G9", "H9", "I9"]
 directions = ["up", "right", "down", "left"]
 alphabet_order = {"A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8, "I": 9}
-alphabet_order_other = {1: "A", 2: "B", 3: "C", 4: "D", 5: "E", 6: "F", 7: "G", 8: "H", 9: "I"}
-all_ship_areas = [[] for i in range(carrier + battleships + submarines + patrols)]
-valid_areas = ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2",
-               "I2", "A3", "B3", "C3", "D3", "E3", "F3", "G3", "H3", "I3", "A4", "B4", "C4", "D4", "E4", "F4", "G4",
-               "H4", "I4", "A5", "B5", "C5", "D5", "E5", "F5", "G5", "H5", "I5", "A6", "B6", "C6", "D6", "E6", "F6",
-               "G6", "H6", "I6", "A7", "B7", "C7", "D7", "E7", "F7", "G7", "H7", "I7", "A8", "B8", "C8", "D8", "E8",
-               "F8", "G8", "H8", "I8", "A9", "B9", "C9", "D9", "E9", "F9", "G9", "H9", "I9"]
 valid_areas_lists = [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1, 8], [1, 9], [2, 1], [2, 2], [2, 3],
                      [2, 4], [2, 5], [2, 6], [2, 7], [2, 8], [2, 9], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 6],
                      [3, 7], [3, 8], [3, 9], [4, 1], [4, 2], [4, 3], [4, 4], [4, 5], [4, 6], [4, 7], [4, 8], [4, 9],
@@ -204,62 +184,88 @@ valid_areas_lists = [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1,
                      [6, 4], [6, 5], [6, 6], [6, 7], [6, 8], [6, 9], [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6],
                      [7, 7], [7, 8], [7, 9], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 7], [8, 8], [8, 9],
                      [9, 1], [9, 2], [9, 3], [9, 4], [9, 5], [9, 6], [9, 7], [9, 8], [9, 9]]
+player_ship_areas = []
+bot_ship_areas = []
+bot_ships_left = ["carrier", "battleship", "battleship", "submarine", "submarine", "patrol", "patrol",
+                  "patrol"]
+player_unshot_areas = [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1, 8], [1, 9], [2, 1], [2, 2], [2, 3],
+                       [2, 4], [2, 5], [2, 6], [2, 7], [2, 8], [2, 9], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 6],
+                       [3, 7], [3, 8], [3, 9], [4, 1], [4, 2], [4, 3], [4, 4], [4, 5], [4, 6], [4, 7], [4, 8], [4, 9],
+                       [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [5, 6], [5, 7], [5, 8], [5, 9], [6, 1], [6, 2], [6, 3],
+                       [6, 4], [6, 5], [6, 6], [6, 7], [6, 8], [6, 9], [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6],
+                       [7, 7], [7, 8], [7, 9], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 7], [8, 8], [8, 9],
+                       [9, 1], [9, 2], [9, 3], [9, 4], [9, 5], [9, 6], [9, 7], [9, 8], [9, 9]]
+
+bot_unshot_areas = [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1, 8], [1, 9], [2, 1], [2, 2], [2, 3],
+                    [2, 4], [2, 5], [2, 6], [2, 7], [2, 8], [2, 9], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 6],
+                    [3, 7], [3, 8], [3, 9], [4, 1], [4, 2], [4, 3], [4, 4], [4, 5], [4, 6], [4, 7], [4, 8], [4, 9],
+                    [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [5, 6], [5, 7], [5, 8], [5, 9], [6, 1], [6, 2], [6, 3],
+                    [6, 4], [6, 5], [6, 6], [6, 7], [6, 8], [6, 9], [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6],
+                    [7, 7], [7, 8], [7, 9], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 7], [8, 8], [8, 9],
+                    [9, 1], [9, 2], [9, 3], [9, 4], [9, 5], [9, 6], [9, 7], [9, 8], [9, 9]]
 
 print("Let's build your grid!")
 
 
-def printsetup():
+def print_setup():
     print("\nYou still have:")
-    tempstr = ""
+    temp_str = ""
     if carrier == 1:
-        tempstr += "\t1 carrier \n"
+        temp_str += "\t1 carrier \n"
     elif carrier == 0:
         pass
     else:
-        tempstr += "\t" + str(carrier) + " carriers \n"
+        temp_str += "\t" + str(carrier) + " carriers \n"
 
     if battleships == 1:
-        tempstr += "\t1 battleship \n"
+        temp_str += "\t1 battleship \n"
     elif battleships == 0:
         pass
     else:
-        tempstr += "\t" + str(battleships) + " battleships \n"
+        temp_str += "\t" + str(battleships) + " battleships \n"
 
     if submarines == 1:
-        tempstr += "\t1 submarine \n"
+        temp_str += "\t1 submarine \n"
     elif submarines == 0:
         pass
     else:
-        tempstr += "\t" + str(submarines) + " submarines \n"
+        temp_str += "\t" + str(submarines) + " submarines \n"
 
     if patrols == 1:
-        tempstr += "\t1 patrol boat \n"
+        temp_str += "\t1 patrol boat \n"
     elif patrols == 0:
         pass
     else:
-        tempstr += "\t" + str(patrols) + " patrol boats \n"
+        temp_str += "\t" + str(patrols) + " patrol boats \n"
 
-    print(tempstr)
+    print(temp_str)
 
     print("Here is your grid: \n")
 
-    printplayergrid()
+    print_grid(grid_list_player)
 
 
-def takeinputs():
+def take_inputs():
     retry = False
     in1 = input("\nSELECT SHIP (carrier, battleship, submarine or patrol): ")
     in2 = input("SELECT AREA (A1, B7, E3, so on): ")
     in3 = input("SELECT DIRECTION (up, right, down, left): ")
     in1 = in1.lower()
-    in2 = in2[0].upper() + str(in2[1])
+    try:
+        in2 = [int(in2[1]), alphabet_order.get(in2[0].upper())]
+    except:
+        print("INVALID INPUT FOR AREA:")
+        input("PRESS ENTER TO CONTINUE:")
+        print("\n")
+        update_grid()
     in3 = in3.lower()
 
     print("")
     if not in1 in ships:
         print("ERROR: INVALID INPUT FOR SHIP.")
         retry = True
-    if not in2 in areas:
+    if not in2 in valid_areas_lists:
+        print(in2)
         print("ERROR: INVALID INPUT FOR AREA.")
         retry = True
     if not in3 in directions:
@@ -278,14 +284,14 @@ def takeinputs():
         return [in1, in2, in3]
 
 
-def updategrid():
-    inputs = takeinputs()
+def update_grid():
+    inputs = take_inputs()
     if not inputs == True:
         in1 = inputs[0]
         in2 = inputs[1]
         in3 = inputs[2]
         spaces = 0
-        area = []
+        area = in2
         if in1 == "carrier":
             global carrier
             carrier -= 1
@@ -302,9 +308,6 @@ def updategrid():
             global patrols
             patrols -= 1
             spaces = 2
-
-        area.append(int(in2[1]))
-        area.append(alphabet_order.get(in2[0]))
 
         ship_areas_grid = [[] for i in range(0, spaces)]
 
@@ -335,15 +338,16 @@ def updategrid():
 
         if valid:
             for i in ship_areas_grid:
+                player_ship_areas.append(i)
                 for e in range(0, 3):
-                    global newplayergrid
-                    newplayergrid[i[0]][e][i[1]] = "[#####]"
-                templist = [[i[0], i[1]], [i[0] + 1, i[1]], [i[0] + 1, i[1] + 1], [i[0], i[1] + 1],
-                            [i[0] - 1, i[1] + 1], [i[0] - 1, i[1]], [i[0] - 1, i[1] - 1], [i[0], i[1] - 1],
-                            [i[0] + 1, i[1] - 1]]
-                for i in templist:
+                    global grid_list_player
+                    grid_list_player[i[0]][e][i[1]] = "[#####]"
+                temp_list = [[i[0], i[1]], [i[0] + 1, i[1]], [i[0] + 1, i[1] + 1], [i[0], i[1] + 1],
+                             [i[0] - 1, i[1] + 1], [i[0] - 1, i[1]], [i[0] - 1, i[1] - 1], [i[0], i[1] - 1],
+                             [i[0] + 1, i[1] - 1]]
+                for e in temp_list:
                     try:
-                        valid_areas_lists.remove(i)
+                        valid_areas_lists.remove(e)
                     except:
                         pass
         else:
@@ -360,14 +364,396 @@ def updategrid():
 
 
 while carrier + battleships + submarines + patrols > 0:
-    printsetup()
-    updategrid()
+    print_setup()
+    update_grid()
 
 print("Your grid is ready!\nHere is your finished grid:\n")
 
-printplayergrid()
+print_grid(grid_list_player)
 
 input("PRESS ENTER TO CONTINUE.")
 
 print("""\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 \n\n\n\n\n\n\n\n\n""")
+
+####
+
+valid_areas_lists = [[1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1, 8], [1, 9], [2, 1], [2, 2], [2, 3],
+                     [2, 4], [2, 5], [2, 6], [2, 7], [2, 8], [2, 9], [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 6],
+                     [3, 7], [3, 8], [3, 9], [4, 1], [4, 2], [4, 3], [4, 4], [4, 5], [4, 6], [4, 7], [4, 8], [4, 9],
+                     [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [5, 6], [5, 7], [5, 8], [5, 9], [6, 1], [6, 2], [6, 3],
+                     [6, 4], [6, 5], [6, 6], [6, 7], [6, 8], [6, 9], [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6],
+                     [7, 7], [7, 8], [7, 9], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 7], [8, 8], [8, 9],
+                     [9, 1], [9, 2], [9, 3], [9, 4], [9, 5], [9, 6], [9, 7], [9, 8], [9, 9]]
+
+the_range = 0
+the_range2 = 0
+
+while the_range < len(bot_ships_left):
+    the_range2 += 1
+
+    if the_range2 > 23:
+        grid_list_bot = convert_grid()
+
+    spaces = 0
+    area = []
+    if bot_ships_left[the_range] == "carrier":
+        spaces = 5
+    elif bot_ships_left[the_range] == "battleship":
+        spaces = 4
+    elif bot_ships_left[the_range] == "submarine":
+        spaces = 3
+    elif bot_ships_left[the_range] == "patrol":
+        spaces = 2
+
+    counter3 = 0
+    while area == [] and counter3 < 80:
+        counter3 += 1
+        for e in range(2):
+            area.append(random.randint(1, 9))
+        if 0 < area[0] < 10 and 0 < area[1] < 10 and area in valid_areas_lists:
+            pass
+        else:
+            area = []
+
+    if counter3 == 80:
+        continue
+
+    ship_areas_grid = []
+    direction = ""
+    counter = 0
+    counter2 = 0
+    while_directions = ["up", "right", "down", "left"]
+
+    while_key = True
+    while counter < 4:
+        direction = ""
+        dir_int = random.randint(1, 4)
+
+        if dir_int == 1 and "up" in while_directions:
+            direction = "up"
+            while_directions.remove("up")
+        if dir_int == 2 and "right" in while_directions:
+            direction = "right"
+            while_directions.remove("right")
+        if dir_int == 3 and "down" in while_directions:
+            direction = "down"
+            while_directions.remove("down")
+        if dir_int == 4 and "left" in while_directions:
+            direction = "left"
+            while_directions.remove("left")
+
+        if direction == "":
+            continue
+
+        ship_areas_grid = [[] for i in range(0, spaces)]
+
+        if direction == "up":
+            for a in range(0, spaces):
+                ship_areas_grid[a].append(area[0] - a)
+                ship_areas_grid[a].append(area[1])
+        elif direction == "right":
+            for a in range(0, spaces):
+                ship_areas_grid[a].append(area[0])
+                ship_areas_grid[a].append(area[1] + a)
+        elif direction == "down":
+            for a in range(0, spaces):
+                ship_areas_grid[a].append(area[0] + a)
+                ship_areas_grid[a].append(area[1])
+        elif direction == "left":
+            for a in range(0, spaces):
+                ship_areas_grid[a].append(area[0])
+                ship_areas_grid[a].append(area[1] - a)
+
+        valid = True
+        for b in ship_areas_grid:
+            if 0 < b[0] < 10 and 0 < b[1] < 10 and b in valid_areas_lists:
+                pass
+            else:
+                valid = False
+                break
+
+        if valid:
+            counter = 4
+        else:
+            counter2 += 1
+            counter += 1
+
+    if counter2 == 4:
+        continue
+
+    for c in ship_areas_grid:
+        bot_ship_areas.append(c)
+        for e in range(0, 3):
+            grid_list_bot[c[0]][e][c[1]] = "[#####]"
+        temp_list = [[c[0], c[1]], [c[0] + 1, c[1]], [c[0] + 1, c[1] + 1], [c[0], c[1] + 1],
+                     [c[0] - 1, c[1] + 1], [c[0] - 1, c[1]], [c[0] - 1, c[1] - 1], [c[0], c[1] - 1],
+                     [c[0] + 1, c[1] - 1]]
+        for e in temp_list:
+            try:
+                valid_areas_lists.remove(e)
+            except:
+                pass
+    the_range += 1
+
+####
+
+sinks = 0
+
+
+def player_shot():
+    input1 = input("ENTER AREA TO SHOOT:")
+    area1 = []
+    try:
+        area1 = [int(input1[1]), alphabet_order.get(input1[0].upper())]
+    except:
+        print("INVALID INPUT:")
+        input("PRESS ENTER TO CONTINUE:")
+        print("\n")
+        player_shot()
+
+    if area1 in player_unshot_areas:
+        player_unshot_areas.remove(area1)
+        if area1 in bot_ship_areas:
+            grid_shot_player[area1[0]][0][area1[1]] = "XXXXXXX"
+            grid_shot_player[area1[0]][1][area1[1]] = "XXXXXXX"
+            grid_shot_player[area1[0]][2][area1[1]] = "XXXXXXX"
+            print("\nHIT!")
+
+            sunk_check = 4
+            for d in bot_ship_areas:
+                if d == [area1[0] + 1, area1[1]]:
+                    sunk_check -= 1
+                    continue
+
+            for d in bot_ship_areas:
+                if d == [area1[0], area1[1] + 1]:
+                    sunk_check -= 1
+                    continue
+
+            for d in bot_ship_areas:
+                if d == [area1[0] - 1, area1[1]]:
+                    sunk_check -= 1
+                    continue
+
+            for d in bot_ship_areas:
+                if d == [area1[0], area1[1] - 1]:
+                    sunk_check += 1
+                    continue
+
+            if sunk_check == 4:
+                print("SUNK!")
+                global sinks
+                sinks += 1
+
+            bot_ship_areas.remove(area1)
+
+        else:
+            grid_shot_player[area1[0]][0][area1[1]] = "======="
+            grid_shot_player[area1[0]][1][area1[1]] = "======="
+            grid_shot_player[area1[0]][2][area1[1]] = "======="
+            print("\nMISS!")
+
+    else:
+        print("INVALID INPUT:")
+        input("PRESS ENTER TO CONTINUE:")
+        print("\n")
+        player_shot()
+
+
+var = []
+counter1 = 0
+best = 0
+area = []
+
+
+def bot_shot():
+    global var
+    global best
+    global area
+    i1 = 0
+    i2 = 0
+    if not var == [] and best == 0:
+        try:
+            bot_unshot_areas.remove(var)
+        except:
+            grid_shot_bot[var[0]][0][var[1]] = "======="
+            grid_shot_bot[var[0]][1][var[1]] = "======="
+            grid_shot_bot[var[0]][2][var[1]] = "======="
+
+            var = []
+            bot_shot()
+            pass
+
+        if var in player_ship_areas:
+            grid_list_player[var[0]][0][var[1]] = "XXXXXXX"
+            grid_list_player[var[0]][1][var[1]] = "XXXXXXX"
+            grid_list_player[var[0]][2][var[1]] = "XXXXXXX"
+            grid_shot_bot[var[0]][0][var[1]] = "XXXXXXX"
+            grid_shot_bot[var[0]][1][var[1]] = "XXXXXXX"
+            grid_shot_bot[var[0]][2][var[1]] = "XXXXXXX"
+            print("THE ENEMY HAS HIT YOUR SHIP!")
+
+            sunk_check = 4
+            for d in player_ship_areas:
+                if d == [var[0] + 1, var[1]]:
+                    sunk_check -= 1
+                    continue
+
+            for d in player_ship_areas:
+                if d == [var[0], var[1] + 1]:
+                    sunk_check -= 1
+                    continue
+
+            for d in player_ship_areas:
+                if d == [var[0] - 1, var[1]]:
+                    sunk_check -= 1
+                    continue
+
+            for d in player_ship_areas:
+                if d == [var[0], var[1] - 1]:
+                    sunk_check += 1
+                    continue
+
+            if sunk_check == 4:
+                print("THE ENEMY HAS SUNK YOUR SHIP!")
+                temp_list1 = [[var[0], var[1]], [var[0] + 1, var[1]], [var[0] + 1, var[1] + 1],
+                              [var[0], var[1] + 1],
+                              [var[0] - 1, var[1] + 1], [var[0] - 1, var[1]], [var[0] - 1, var[1] - 1],
+                              [var[0], var[1] - 1],
+                              [var[0] + 1, var[1] - 1]]
+                for h in temp_list1:
+                    try:
+                        bot_unshot_areas.remove(h)
+                        grid_shot_bot[h[0]][0][h[1]] = "======="
+                        grid_shot_bot[h[0]][1][h[1]] = "======="
+                        grid_shot_bot[h[0]][2][h[1]] = "======="
+                    except:
+                        pass
+
+            player_ship_areas.remove(var)
+        else:
+            grid_shot_bot[var[0]][0][var[1]] = "======="
+            grid_shot_bot[var[0]][1][var[1]] = "======="
+            grid_shot_bot[var[0]][2][var[1]] = "======="
+
+        var = []
+        bot_shot()
+        pass
+    else:
+        for i in range(500):
+            i1 = random.randint(1, 9)
+            i2 = random.randint(1, 9)
+            if [i1, i2] in bot_unshot_areas:
+                global counter1
+                counter1 = 0
+                if [i1 + 1, i2] in bot_unshot_areas:
+                    counter1 += 1
+                if [i1, i2 + 1] in bot_unshot_areas:
+                    counter1 += 1
+                if [i1 - 1, i2] in bot_unshot_areas:
+                    counter1 += 1
+                if [i1, i2 - 1] in bot_unshot_areas:
+                    counter1 += 1
+
+                if var == [] or counter1 < best:
+                    var = [i1, i2]
+                    best = counter1
+
+        if [var[0] + 1, var[1]] in bot_unshot_areas:
+            area = [var[0] + 1, var[1]]
+        elif [var[0], var[1] + 1] in bot_unshot_areas:
+            area = [var[0], var[1] + 1]
+        elif [var[0] - 1, var[1]] in bot_unshot_areas:
+            area = [var[0] - 1, var[1]]
+        elif [var[0], var[1] - 1] in bot_unshot_areas:
+            area = [var[0], var[1] - 1]
+        else:
+            area = var
+
+        bot_unshot_areas.remove(area)
+        if area in player_ship_areas:
+            grid_list_player[area[0]][0][area[1]] = "XXXXXXX"
+            grid_list_player[area[0]][1][area[1]] = "XXXXXXX"
+            grid_list_player[area[0]][2][area[1]] = "XXXXXXX"
+            grid_shot_bot[area[0]][0][area[1]] = "XXXXXXX"
+            grid_shot_bot[area[0]][1][area[1]] = "XXXXXXX"
+            grid_shot_bot[area[0]][2][area[1]] = "XXXXXXX"
+            print("THE ENEMY HAS HIT YOUR SHIP!")
+
+            sunk_check = 4
+            for d in player_ship_areas:
+                if d == [area[0] + 1, area[1]]:
+                    sunk_check -= 1
+                    continue
+
+            for d in player_ship_areas:
+                if d == [area[0], area[1] + 1]:
+                    sunk_check -= 1
+                    continue
+
+            for d in player_ship_areas:
+                if d == [area[0] - 1, area[1]]:
+                    sunk_check -= 1
+                    continue
+
+            for d in player_ship_areas:
+                if d == [area[0], area[1] - 1]:
+                    sunk_check += 1
+                    continue
+
+            if sunk_check == 4:
+                print("THE ENEMY HAS SUNK YOUR SHIP!")
+                temp_list1 = [[area[0], area[1]], [area[0] + 1, area[1]], [area[0] + 1, area[1] + 1],
+                              [area[0], area[1] + 1],
+                              [area[0] - 1, area[1] + 1], [area[0] - 1, area[1]], [area[0] - 1, area[1] - 1],
+                              [area[0], area[1] - 1],
+                              [area[0] + 1, area[1] - 1]]
+                for h in temp_list1:
+                    try:
+                        bot_unshot_areas.remove(h)
+                        grid_shot_bot[h[0]][0][h[1]] = "======="
+                        grid_shot_bot[h[0]][1][h[1]] = "======="
+                        grid_shot_bot[h[0]][2][h[1]] = "======="
+                    except:
+                        pass
+
+            player_ship_areas.remove(area)
+        else:
+            print("THE ENEMY MISSED!")
+            grid_shot_bot[area[0]][0][area[1]] = "======="
+            grid_shot_bot[area[0]][1][area[1]] = "======="
+            grid_shot_bot[area[0]][2][area[1]] = "======="
+
+
+rounds = 1
+while not player_ship_areas == [] or not bot_ship_areas == []:
+    print("Round " + str(rounds))
+    print("Players turn!\n")
+    print("Your ship grid:")
+    print_grid(grid_list_player)
+    print("\n")
+    print("Your shot grid:")
+    print_grid(grid_shot_player)
+    print("Stats:\n\tEnemy ships sunk - " + str(sinks))
+    print("\n")
+    player_shot()
+    input("PRESS ENTER TO CONTINUE:")
+
+    bot_shot()
+    input("PRESS ENTER TO CONTINUE:")
+
+    print("""\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+    \n\n\n\n\n\n\n\n\n""")
+    rounds += 1
+
+if player_ship_areas == [] and not bot_ship_areas == []:
+    print("YOU LOSE!")
+
+elif not player_ship_areas == [] and bot_ship_areas == []:
+    print("YOU WIN!")
+
+else:
+    print("IT'S A DRAW!")
+
+input("PRESS ENTER TO CONTINUE:")
