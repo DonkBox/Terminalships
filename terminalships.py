@@ -689,7 +689,55 @@ best = 0
 area = []
 removals = []
 ship = []
+shot_key = True
+last_hit = []
+counter4 = 0
 
+def bot_sink():
+    global var
+    global best
+    global ship_key
+    global removals
+    global last_hit
+    global ship
+    last_hit = []
+    ship_key = False
+    var = []
+    best = 0
+    grid_list_player[removals[0][0]][0][removals[0][1]] = "XXXXXXX"
+    grid_list_player[removals[0][0]][1][removals[0][1]] = "XXXXXXX"
+    grid_list_player[removals[0][0]][2][removals[0][1]] = "XXXXXXX"
+    grid_shot_bot[removals[0][0]][0][removals[0][1]] = "XXXXXXX"
+    grid_shot_bot[removals[0][0]][1][removals[0][1]] = "XXXXXXX"
+    grid_shot_bot[removals[0][0]][2][removals[0][1]] = "XXXXXXX"
+    try:
+        player_ship_areas.remove(removals[0])
+    except:
+        pass
+    removals.pop(0)
+    print("THE ENEMY HAS HIT YOUR SHIP!")
+    print("THE ENEMY HAS SUNK YOUR SHIP!")
+    for i in ship:
+        temp_list1 = [[i[0], i[1]], [i[0] + 1, i[1]], [i[0] + 1, i[1] + 1],
+                      [i[0], i[1] + 1],
+                      [i[0] - 1, i[1] + 1], [i[0] - 1, i[1]], [i[0] - 1, i[1] - 1],
+                      [i[0], i[1] - 1],
+                      [i[0] + 1, i[1] - 1]]
+        for h in temp_list1:
+            try:
+                bot_unshot_areas.remove(h)
+                grid_shot_bot[h[0]][0][h[1]] = "======="
+                grid_shot_bot[h[0]][1][h[1]] = "======="
+                grid_shot_bot[h[0]][2][h[1]] = "======="
+            except:
+                pass
+    for i in ship:
+        grid_list_player[i[0]][0][i[1]] = "XXXXXXX"
+        grid_list_player[i[0]][1][i[1]] = "XXXXXXX"
+        grid_list_player[i[0]][2][i[1]] = "XXXXXXX"
+        grid_shot_bot[i[0]][0][i[1]] = "XXXXXXX"
+        grid_shot_bot[i[0]][1][i[1]] = "XXXXXXX"
+        grid_shot_bot[i[0]][2][i[1]] = "XXXXXXX"
 
 
 def bot_shot():
@@ -697,135 +745,243 @@ def bot_shot():
     global best
     global area
     global ship_key
+    global counter4
     global removals
     global ship
+    global shot_key
+    global last_hit
+    global player_ship_areas
     i1 = 0
     i2 = 0
-    if ship_key:
-        if len(removals) == 1:
-            ship_key = False
-            var = []
-            best = 0
-            grid_list_player[removals[0][0]][0][removals[0][1]] = "XXXXXXX"
-            grid_list_player[removals[0][0]][1][removals[0][1]] = "XXXXXXX"
-            grid_list_player[removals[0][0]][2][removals[0][1]] = "XXXXXXX"
-            grid_shot_bot[removals[0][0]][0][removals[0][1]] = "XXXXXXX"
-            grid_shot_bot[removals[0][0]][1][removals[0][1]] = "XXXXXXX"
-            grid_shot_bot[removals[0][0]][2][removals[0][1]] = "XXXXXXX"
-            player_ship_areas.remove(removals[0])
-            removals.pop(0)
-            print("THE ENEMY HAS HIT YOUR SHIP!")
-            print("THE ENEMY HAS SUNK YOUR SHIP!")
-            for i in ship:
-                temp_list1 = [[i[0], i[1]], [i[0] + 1, i[1]], [i[0] + 1, i[1] + 1],
-                              [i[0], i[1] + 1],
-                              [i[0] - 1, i[1] + 1], [i[0] - 1, i[1]], [i[0] - 1, i[1] - 1],
-                              [i[0], i[1] - 1],
-                              [i[0] + 1, i[1] - 1]]
-                for h in temp_list1:
-                    try:
-                        bot_unshot_areas.remove(h)
-                        grid_shot_bot[h[0]][0][h[1]] = "======="
-                        grid_shot_bot[h[0]][1][h[1]] = "======="
-                        grid_shot_bot[h[0]][2][h[1]] = "======="
-                    except:
-                        pass
-            for i in ship:
-                grid_list_player[i[0]][0][i[1]] = "XXXXXXX"
-                grid_list_player[i[0]][1][i[1]] = "XXXXXXX"
-                grid_list_player[i[0]][2][i[1]] = "XXXXXXX"
-                grid_shot_bot[i[0]][0][i[1]] = "XXXXXXX"
-                grid_shot_bot[i[0]][1][i[1]] = "XXXXXXX"
-                grid_shot_bot[i[0]][2][i[1]] = "XXXXXXX"
+    if shot_key:
+        shot_key = False
+        if ship_key:
+            if len(removals) == 1:
+                bot_sink()
+            else:
+                try:
+                    grid_list_player[removals[0][0]][0][removals[0][1]] = "XXXXXXX"
+                    grid_list_player[removals[0][0]][1][removals[0][1]] = "XXXXXXX"
+                    grid_list_player[removals[0][0]][2][removals[0][1]] = "XXXXXXX"
+                    grid_shot_bot[removals[0][0]][0][removals[0][1]] = "XXXXXXX"
+                    grid_shot_bot[removals[0][0]][1][removals[0][1]] = "XXXXXXX"
+                    grid_shot_bot[removals[0][0]][2][removals[0][1]] = "XXXXXXX"
+                except:
+                    pass
+                print("THE ENEMY HAS HIT YOUR SHIP!")
+                try:
+                    player_ship_areas.remove(removals[0])
+                except:
+                    pass
+                try:
+                    removals.pop(0)
+                except:
+                    pass
+                try:
+                    bot_unshot_areas.remove(removals[0])
+                except:
+                    pass
 
-        else:
-            grid_list_player[removals[0][0]][0][removals[0][1]] = "XXXXXXX"
-            grid_list_player[removals[0][0]][1][removals[0][1]] = "XXXXXXX"
-            grid_list_player[removals[0][0]][2][removals[0][1]] = "XXXXXXX"
-            grid_shot_bot[removals[0][0]][0][removals[0][1]] = "XXXXXXX"
-            grid_shot_bot[removals[0][0]][1][removals[0][1]] = "XXXXXXX"
-            grid_shot_bot[removals[0][0]][2][removals[0][1]] = "XXXXXXX"
-            print("THE ENEMY HAS HIT YOUR SHIP!")
-            player_ship_areas.remove(removals[0])
-            removals.pop(0)
+        elif not last_hit == []:
+            if counter4 == 0:
+                if [last_hit[0] + 1, last_hit[1]] in bot_unshot_areas:
+                    area = [last_hit[0] + 1, last_hit[1]]
+                    bot_unshot_areas.remove(area)
+                    if area in ship:
+                        if len(removals) == 1:
+                            bot_sink()
+                        else:
+                            grid_list_player[area[0]][0][area[1]] = "XXXXXXX"
+                            grid_list_player[area[0]][1][area[1]] = "XXXXXXX"
+                            grid_list_player[area[0]][2][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][0][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][1][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][2][area[1]] = "XXXXXXX"
+                            print("THE ENEMY HAS HIT YOUR SHIP!")
+                            player_ship_areas.remove(area)
+                            ship_key = True
+                            counter4 = 0
+                            last_hit = []
+                            removals.pop(0)
+
+                    else:
+                        print("THE ENEMY MISSED!")
+                        grid_shot_bot[area[0]][0][area[1]] = "======="
+                        grid_shot_bot[area[0]][1][area[1]] = "======="
+                        grid_shot_bot[area[0]][2][area[1]] = "======="
+
+                else:
+                    shot_key = True
+                    counter4 += 1
+                    bot_shot()
+
+            elif counter4 == 1:
+                if [last_hit[0], last_hit[1] + 1] in bot_unshot_areas:
+                    area = [last_hit[0], last_hit[1] + 1]
+                    bot_unshot_areas.remove(area)
+                    if area in ship:
+                        if len(removals) == 1:
+                            bot_sink()
+                        else:
+                            grid_list_player[area[0]][0][area[1]] = "XXXXXXX"
+                            grid_list_player[area[0]][1][area[1]] = "XXXXXXX"
+                            grid_list_player[area[0]][2][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][0][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][1][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][2][area[1]] = "XXXXXXX"
+                            print("THE ENEMY HAS HIT YOUR SHIP!")
+                            player_ship_areas.remove(area)
+                            ship_key = True
+                            counter4 = 0
+                            last_hit = []
+                            removals.pop(0)
+
+                    else:
+                        print("THE ENEMY MISSED!")
+                        grid_shot_bot[area[0]][0][area[1]] = "======="
+                        grid_shot_bot[area[0]][1][area[1]] = "======="
+                        grid_shot_bot[area[0]][2][area[1]] = "======="
+
+                else:
+                    shot_key = True
+                    counter4 += 1
+                    bot_shot()
+
+            elif counter4 == 2:
+                if [last_hit[0] - 1, last_hit[1]] in bot_unshot_areas:
+                    area = [last_hit[0] - 1, last_hit[1]]
+                    bot_unshot_areas.remove(area)
+                    if area in ship:
+                        if len(removals) == 1:
+                            bot_sink()
+                        else:
+                            grid_list_player[area[0]][0][area[1]] = "XXXXXXX"
+                            grid_list_player[area[0]][1][area[1]] = "XXXXXXX"
+                            grid_list_player[area[0]][2][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][0][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][1][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][2][area[1]] = "XXXXXXX"
+                            print("THE ENEMY HAS HIT YOUR SHIP!")
+                            player_ship_areas.remove(area)
+                            ship_key = True
+                            counter4 = 0
+                            last_hit = []
+                            removals.pop(0)
+
+                    else:
+                        print("THE ENEMY MISSED!")
+                        grid_shot_bot[area[0]][0][area[1]] = "======="
+                        grid_shot_bot[area[0]][1][area[1]] = "======="
+                        grid_shot_bot[area[0]][2][area[1]] = "======="
+
+                else:
+                    shot_key = True
+                    counter4 += 1
+                    bot_shot()
+
+            elif counter4 == 3:
+                if [last_hit[0], last_hit[1] - 1] in bot_unshot_areas:
+                    area = [last_hit[0], last_hit[1] - 1]
+                    bot_unshot_areas.remove(area)
+                    if area in ship:
+                        if len(removals) == 1:
+                            bot_sink()
+                        else:
+                            grid_list_player[area[0]][0][area[1]] = "XXXXXXX"
+                            grid_list_player[area[0]][1][area[1]] = "XXXXXXX"
+                            grid_list_player[area[0]][2][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][0][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][1][area[1]] = "XXXXXXX"
+                            grid_shot_bot[area[0]][2][area[1]] = "XXXXXXX"
+                            print("THE ENEMY HAS HIT YOUR SHIP!")
+                            player_ship_areas.remove(area)
+                            ship_key = True
+                            counter4 = 0
+                            last_hit = []
+                            removals.pop(0)
+
+                    else:
+                        print("THE ENEMY MISSED!")
+                        grid_shot_bot[area[0]][0][area[1]] = "======="
+                        grid_shot_bot[area[0]][1][area[1]] = "======="
+                        grid_shot_bot[area[0]][2][area[1]] = "======="
+
+                else:
+                    shot_key = True
+                    counter4 += 1
+                    bot_shot()
+
+            else:
+                ship_key = True
+                shot_key = True
+                counter4 = 0
+                bot_shot()
+
+        elif not var == [] and best == 0:
             try:
-                bot_unshot_areas.remove(removals[0])
+                bot_unshot_areas.remove(var)
+
             except:
-                pass
+                grid_shot_bot[var[0]][0][var[1]] = "======="
+                grid_shot_bot[var[0]][1][var[1]] = "======="
+                grid_shot_bot[var[0]][2][var[1]] = "======="
 
-    elif not var == [] and best == 0:
-        try:
-            bot_unshot_areas.remove(var)
-        except:
-            grid_shot_bot[var[0]][0][var[1]] = "======="
-            grid_shot_bot[var[0]][1][var[1]] = "======="
-            grid_shot_bot[var[0]][2][var[1]] = "======="
-
-            var = []
-            bot_shot()
-            pass
-
-        grid_shot_bot[var[0]][0][var[1]] = "======="
-        grid_shot_bot[var[0]][1][var[1]] = "======="
-        grid_shot_bot[var[0]][2][var[1]] = "======="
-
-        var = []
-        bot_shot()
-        pass
-    else:
-        for i in range(500):
-            i1 = random.randint(1, 9)
-            i2 = random.randint(1, 9)
-            if [i1, i2] in bot_unshot_areas:
-                global counter1
-                counter1 = 0
-                if [i1 + 1, i2] in bot_unshot_areas:
-                    counter1 += 1
-                if [i1, i2 + 1] in bot_unshot_areas:
-                    counter1 += 1
-                if [i1 - 1, i2] in bot_unshot_areas:
-                    counter1 += 1
-                if [i1, i2 - 1] in bot_unshot_areas:
-                    counter1 += 1
-
-                if var == [] or counter1 < best:
-                    var = [i1, i2]
-                    best = counter1
-
-        if [var[0] + 1, var[1]] in bot_unshot_areas:
-            area = [var[0] + 1, var[1]]
-        elif [var[0], var[1] + 1] in bot_unshot_areas:
-            area = [var[0], var[1] + 1]
-        elif [var[0] - 1, var[1]] in bot_unshot_areas:
-            area = [var[0] - 1, var[1]]
-        elif [var[0], var[1] - 1] in bot_unshot_areas:
-            area = [var[0], var[1] - 1]
+                var = []
+                shot_key = True
+                bot_shot()
         else:
-            area = var
+            for i in range(500):
+                i1 = random.randint(1, 9)
+                i2 = random.randint(1, 9)
+                if [i1, i2] in bot_unshot_areas:
+                    global counter1
+                    counter1 = 0
+                    if [i1 + 1, i2] in bot_unshot_areas:
+                        counter1 += 1
+                    if [i1, i2 + 1] in bot_unshot_areas:
+                        counter1 += 1
+                    if [i1 - 1, i2] in bot_unshot_areas:
+                        counter1 += 1
+                    if [i1, i2 - 1] in bot_unshot_areas:
+                        counter1 += 1
 
-        bot_unshot_areas.remove(area)
-        if area in player_ship_areas:
-            grid_list_player[area[0]][0][area[1]] = "XXXXXXX"
-            grid_list_player[area[0]][1][area[1]] = "XXXXXXX"
-            grid_list_player[area[0]][2][area[1]] = "XXXXXXX"
-            grid_shot_bot[area[0]][0][area[1]] = "XXXXXXX"
-            grid_shot_bot[area[0]][1][area[1]] = "XXXXXXX"
-            grid_shot_bot[area[0]][2][area[1]] = "XXXXXXX"
-            print("THE ENEMY HAS HIT YOUR SHIP!")
+                    if var == [] or counter1 < best:
+                        var = [i1, i2]
+                        best = counter1
 
-            removals = temp_ship_info(area, player_ship_areas)
-            removals.pop(0)
-            ship = temp_ship_info(area, player_ship_areas)
+            if [var[0] + 1, var[1]] in bot_unshot_areas:
+                area = [var[0] + 1, var[1]]
+            elif [var[0], var[1] + 1] in bot_unshot_areas:
+                area = [var[0], var[1] + 1]
+            elif [var[0] - 1, var[1]] in bot_unshot_areas:
+                area = [var[0] - 1, var[1]]
+            elif [var[0], var[1] - 1] in bot_unshot_areas:
+                area = [var[0], var[1] - 1]
+            else:
+                area = var
 
-            var = removals[0]
-            ship_key = True
+            bot_unshot_areas.remove(area)
+            if area in player_ship_areas:
+                grid_list_player[area[0]][0][area[1]] = "XXXXXXX"
+                grid_list_player[area[0]][1][area[1]] = "XXXXXXX"
+                grid_list_player[area[0]][2][area[1]] = "XXXXXXX"
+                grid_shot_bot[area[0]][0][area[1]] = "XXXXXXX"
+                grid_shot_bot[area[0]][1][area[1]] = "XXXXXXX"
+                grid_shot_bot[area[0]][2][area[1]] = "XXXXXXX"
+                print("THE ENEMY HAS HIT YOUR SHIP!")
 
-            player_ship_areas.remove(area)
-        else:
-            print("THE ENEMY MISSED!")
-            grid_shot_bot[area[0]][0][area[1]] = "======="
-            grid_shot_bot[area[0]][1][area[1]] = "======="
-            grid_shot_bot[area[0]][2][area[1]] = "======="
+                removals = temp_ship_info(area, player_ship_areas)
+                removals.pop(0)
+                ship = temp_ship_info(area, player_ship_areas)
+
+                last_hit = area
+
+                player_ship_areas.remove(area)
+            else:
+                print("THE ENEMY MISSED!")
+                grid_shot_bot[area[0]][0][area[1]] = "======="
+                grid_shot_bot[area[0]][1][area[1]] = "======="
+                grid_shot_bot[area[0]][2][area[1]] = "======="
 
 #### Main part of the game.
 
@@ -844,6 +1000,7 @@ while not player_ship_areas == [] and not bot_ship_areas == []:
     input("PRESS ENTER TO CONTINUE:")
 
     bot_shot()
+    shot_key = True
     input("PRESS ENTER TO CONTINUE:")
 
     print("""\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
