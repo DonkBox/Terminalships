@@ -1,11 +1,11 @@
 # Terminalships
-### It's my first Python project so the goal of it is to test what I've learned up to this point.
+### It's my first Python project so the goal of it is to put my skills to test.
 
 ### •	What does my program do? 
-   ######	It is a battleship videogame that works in the terminal. This videogame follows the rules of the Tactic® Battleship board game.
+   ######	It is a battleship videogame that works in the terminal.
 
 ### •	Is it one player or two players?
-  #####	It’s a single player game.
+  #####	It’s a single player game, but you play against an AI enemy.
 
 ### •	Project objectives:
    #####	Build a terminal program using Python.
