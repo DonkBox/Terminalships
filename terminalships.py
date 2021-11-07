@@ -229,32 +229,32 @@ def print_setup():
     print("\nYou still have:")
     temp_str = ""
     if carrier == 1:
-        temp_str += "\t1 carrier \n"
+        temp_str += "\t1 carrier (length 5 areas)\n"
     elif carrier == 0:
         pass
     else:
-        temp_str += "\t" + str(carrier) + " carriers \n"
+        temp_str += "\t" + str(carrier) + " carriers (length 5 areas)\n"
 
     if battleships == 1:
-        temp_str += "\t1 battleship \n"
+        temp_str += "\t1 battleship (length 4 areas)\n"
     elif battleships == 0:
         pass
     else:
-        temp_str += "\t" + str(battleships) + " battleships \n"
+        temp_str += "\t" + str(battleships) + " battleships (length 4 areas)\n"
 
     if submarines == 1:
-        temp_str += "\t1 submarine \n"
+        temp_str += "\t1 submarine (length 3 areas)\n"
     elif submarines == 0:
         pass
     else:
-        temp_str += "\t" + str(submarines) + " submarines \n"
+        temp_str += "\t" + str(submarines) + " submarines (length 3 areas)\n"
 
     if patrols == 1:
-        temp_str += "\t1 patrol boat \n"
+        temp_str += "\t1 patrol boat (length 2 areas)\n"
     elif patrols == 0:
         pass
     else:
-        temp_str += "\t" + str(patrols) + " patrol boats \n"
+        temp_str += "\t" + str(patrols) + " patrol boats (length 2 areas)\n"
 
     print(temp_str)
 
